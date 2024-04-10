@@ -7,13 +7,19 @@ import pyautogui as pya
 
 import printables as mprint
 
-# mySave = ;)
+# Setup variables
 
-# # Setup variables
-# Number of ascensions that will be done, change this number if you don't need
-# to do 1000 ascensions
-# First guided ascension is included in this math
-targetAscensions = 1000
+targetAscensions = None
+correct = False
+while not correct:
+    try:
+        value = int(input('Write how many ascension you already have done: '))
+        assert(value > 0)
+        targetAscensions = 999 - value
+        correct = True
+    except:
+        print('The format is not correct or the number is too big')
+    
 # Delays, modify if your PC is Fast, mine is not.
 # Default are tiny: 0.2 seconds and medium: 0.8 seconds
 tinySleep = 0.2
@@ -29,8 +35,6 @@ spotsDict = {
         'All Upgrades' : (0, 0), 
         'Cursors' : (0, 0),
         'Grandmas' : (0, 0),
-        'Fractals' : (0, 0),
-        'Idleverses' : (0, 0),
         'Legacy' : (0, 0),
         'Reincarnate' : (0, 0)
         }
@@ -46,34 +50,28 @@ def buy100s():
     pya.keyUp('shift')
 
 def buyUpgrades():
-    pya.press('home') # This key scrolls up
-    time.sleep(mediumSleep)
+    time.sleep(tinySleep)
     pya.moveTo(spotsDict['All Upgrades'], duration = 0)
     pya.click()
-    time.sleep(mediumSleep)
+    time.sleep(tinySleep)
     pya.click()
     time.sleep(mediumSleep)
     pya.click()
-    pya.moveTo(spotsDict['Reincarnate'], duration = 0)
+
 
 def buyBuildings():
-    time.sleep(mediumSleep)
-    buyUpgrades() # Scrolls auto up again  
-    time.sleep(mediumSleep) 
+    time.sleep(tinySleep)
+    buyUpgrades()
+    time.sleep(tinySleep)
     pya.moveTo(spotsDict['Cursors'], duration = 0)
     buy100s()
     pya.moveTo(spotsDict['Grandmas'], duration = 0)
     buy100s()
-    time.sleep(mediumSleep) 
+    time.sleep(tinySleep) 
     buyUpgrades()
-    pya.moveTo(spotsDict['Grandmas'], duration = 0)
+    pya.moveTo(spotsDict['Cursors'], duration = 0)
     pya.click()
-    pya.press('end')  # Scroll down again
-    time.sleep(1)
-    pya.moveTo(spotsDict['Fractals'], duration = 0)
-    buy100s()
-    pya.moveTo(spotsDict['Idleverses'], duration = 0)
-    buy100s()
+
 
 # Adding a manual stop, this will finish the ascension and stop from looping
 def stop():
@@ -100,12 +98,15 @@ os.system('cls')
 mprint.cookieLine()
 mprint.title()
 mprint.cookieLine()
-print('\n\tWelcome to charles8ff\'s Endless Cycle Is No More!'
-      '\n\nThis is an script, it will perform automatic actions. Do not fear it. Should not harm anything.'
+print('\n\tWelcome to Gabbo5001\'s Endless Cycle Is No More!'
+      '\n\nThis is a script, it will perform automatic actions. Do not fear it. Should not harm anything.'
       '\n-Remember to disable any mods related to buy/ascend purposes.'
-      '\n-Make a backup in case this does fail.')
+      '\n-Make a backup in case this does fail.'
+      '\n-You can stop the process in any moment pressing \'q\' on your keyboard')
 mprint.credits()
-print('\n\n\tNow we need some button locations of your screen...\n')
+print('\n\n\tNow we need some button locations of your screen. Please do not open other tabs \
+      outside Cookie Clicker and your terminal.\n')
+
 # Loop the dict to record coords
 for item in spotsDict:
     print('In your game, move your cursor where the Buy '+ item + ' button is.'
